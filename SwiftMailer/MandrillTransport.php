@@ -401,6 +401,13 @@ class MandrillTransport implements Swift_Transport
             }
         }
 
+        if ($message->getHeaders()->has('Mandrill-Metadata')) {
+            $metadata = $message->getHeaders()->get('Mandrill-Metadata')->getValue();
+            if (is_array($metadata)) {
+                $mandrillMessage['metadata'] = $metadata;
+            }
+        }
+
         if ($this->getSubaccount()) {
             $mandrillMessage['subaccount'] = $this->getSubaccount();
         }
